@@ -7,6 +7,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Core/Systems/Items/Item.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -42,6 +43,11 @@ void AMyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (PhysicsHandleComp->GetGrabbedComponent())
+	{
+		FVector TargetLocation = CameraComp->GetComponentLocation() + (CameraComp->GetForwardVector() * 200.f);
+		PhysicsHandleComp->SetTargetLocation(TargetLocation);
+	}
 }
 
 // Called to bind functionality to input
@@ -60,6 +66,9 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AMyCharacter::Look);
+
+		EnhancedInputComponent->BindAction(GrabAction, ETriggerEvent::Started, this, &AMyCharacter::Grab);
+		EnhancedInputComponent->BindAction(GrabAction, ETriggerEvent::Completed, this, &AMyCharacter::Release);
 	}
 }
 void AMyCharacter::Move(const FInputActionValue& Value)
@@ -75,6 +84,48 @@ void AMyCharacter::Move(const FInputActionValue& Value)
 	}
 }
 
+void AMyCharacter::Grab()
+{
+	FHitResult Hit;
+	FVector start = CameraComp->GetComponentLocation();
+	FVector end = start + (CameraComp->GetForwardVector() * 500);
+
+	if (GetWorld()->LineTraceSingleByChannel(Hit, start,end, ECC_Visibility))
+	{
+		AItem* HitItem = Cast<AItem>(Hit.GetActor());
+
+		if (HitItem != nullptr) //need a check for the if statement
+		{
+			UE_LOG(LogTemp, Warning, TEXT("%s"), *HitItem->GetName());
+			UPrimitiveComponent* comp = Hit.GetComponent();
+			PhysicsHandleComp->GrabComponentAtLocation(
+			comp,
+			NAME_None,
+			Hit.ImpactPoint
+			);
+			HitItem->bIsHeld = true;
+		}
+	}
+
+	DrawDebugLine( //for visuallizing breaksa if you click
+		GetWorld(),
+		start,
+		end,
+		FColor::Green,
+		false,
+		1.f,
+		0,
+		1.f
+		);
+}
+
+void AMyCharacter::Release()
+{
+	if (PhysicsHandleComp->GetGrabbedComponent())
+	{
+		PhysicsHandleComp->ReleaseComponent();
+	}
+}
 void AMyCharacter::Look(const FInputActionValue& Value)
 {
 	// input is a Vector2D

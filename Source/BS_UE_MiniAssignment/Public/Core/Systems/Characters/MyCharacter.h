@@ -34,9 +34,13 @@ private:
 	UFUNCTION() void Look(const FInputActionValue& Value);
 	UFUNCTION() void Move(const FInputActionValue& Value);
 	
+	UFUNCTION() void Grab();
+	UFUNCTION() void Release();
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Player | Player Input") UInputMappingContext* MyMappingContext;
 	UPROPERTY(EditDefaultsOnly, Category = "Player | Player Input") UInputAction* LookAction;
 	UPROPERTY(EditDefaultsOnly, Category = "Player | Player Input") UInputAction* MoveAction;
 	UPROPERTY(EditDefaultsOnly, Category = "Player | Player Input") UInputAction* JumpAction;
+	UPROPERTY(EditDefaultsOnly, Category = "Player | Player Input") UInputAction* GrabAction;
 	UPROPERTY(VisibleAnywhere, Category = "Player | Components") UCameraComponent* CameraComp;
 };
