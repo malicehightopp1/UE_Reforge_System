@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "Item.generated.h"
 
+class UWidgetComponent;
+
 UCLASS()
 class BS_UE_MINIASSIGNMENT_API AItem : public AActor
 {
@@ -17,6 +19,7 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "ItemClass | Component") UStaticMeshComponent* ItemMesh;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ItemClass | Physics") bool bIsHeld;
+	//UPROPERTY(EditDefaultsOnly, Category = "ItemClass | Component") UWidgetComponent* WidgetComponent;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

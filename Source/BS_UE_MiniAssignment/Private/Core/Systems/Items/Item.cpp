@@ -3,15 +3,19 @@
 
 #include "Core/Systems/Items/Item.h"
 
+#include "Components/Widget.h"
+#include "Components/WidgetComponent.h"
+
 // Sets default values
 AItem::AItem()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	
 
 	ItemMesh = CreateDefaultSubobject<UStaticMeshComponent>("ItemMesh");
 	RootComponent = ItemMesh;
+	//WidgetComponent = CreateDefaultSubobject<UWidgetComponent>("WidgetComponent");
 
 	ItemMesh->SetSimulatePhysics(true);
 	ItemMesh->SetEnableGravity(true);

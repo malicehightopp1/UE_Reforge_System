@@ -17,7 +17,11 @@ void AWeaponDetection::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, 
 {
 	auto* ItemDetected = Cast<AWeapon>(OtherActor);
 
-	if (!ItemDetected) return;
+	if (!ItemDetected)
+	{
+		UE_LOG(LogTemp, Display, TEXT("Not a reforgable Item"));
+		return;
+	}
 	
 	switch (ItemDetected->WeaponType)
 	{

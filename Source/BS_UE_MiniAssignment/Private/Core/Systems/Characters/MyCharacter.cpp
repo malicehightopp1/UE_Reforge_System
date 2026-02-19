@@ -93,7 +93,7 @@ void AMyCharacter::Grab()
 	if (GetWorld()->LineTraceSingleByChannel(Hit, start,end, ECC_Visibility))
 	{
 		AItem* HitItem = Cast<AItem>(Hit.GetActor());
-
+		
 		if (HitItem != nullptr) //need a check for the if statement
 		{
 			UE_LOG(LogTemp, Warning, TEXT("%s"), *HitItem->GetName());
