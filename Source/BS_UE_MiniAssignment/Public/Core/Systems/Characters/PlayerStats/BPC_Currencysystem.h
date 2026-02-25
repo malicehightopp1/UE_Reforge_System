@@ -6,7 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "BPC_Currencysystem.generated.h"
 
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOncurrencyChange,float,CurrencyChange);
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BS_UE_MINIASSIGNMENT_API UBPC_Currencysystem : public UActorComponent
 {
@@ -15,9 +15,10 @@ class BS_UE_MINIASSIGNMENT_API UBPC_Currencysystem : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UBPC_Currencysystem();
+	
+	UPROPERTY(EditDefaultsOnly,BlueprintAssignable, Category = "PlayerStats") FOncurrencyChange OnCurrencyChange;
+	UFUNCTION(BlueprintCallable, Category = "PlayerStats") void ChangePlayerCurrencey(float CurrencyTochange);
 
-	UFUNCTION(Blueprintable, Category = "PlayerStats") void ChangePlayerCurrencey(float CurrencyTochange);
-	//UFUNCTION(blueprintCallable, Category = "PlayerStats") void UpdatePlayerCurrency(const FString& CurrencyTochange);
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

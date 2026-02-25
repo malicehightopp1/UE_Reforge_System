@@ -26,9 +26,9 @@ AMyCharacter::AMyCharacter()
 	
 	PhysicsHandleComp = CreateDefaultSubobject<UPhysicsHandleComponent>(TEXT("PhysicsHandle"));
 	
+	CurrencySystem = CreateDefaultSubobject<UBPC_Currencysystem>("currencySystem");
 	PlayerWidget = CreateDefaultSubobject<UUserWidget>("PlayerWidget");
 }
-
 // Called when the game starts or when spawned
 void AMyCharacter::BeginPlay()
 {

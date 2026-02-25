@@ -6,8 +6,10 @@
 #include "BS_UE_MiniAssignment/BS_UE_MiniAssignmentCharacter.h"
 #include "GameFramework/Character.h"
 #include "PhysicsEngine/PhysicsHandleComponent.h"
+#include "PlayerStats/BPC_Currencysystem.h"
 #include "MyCharacter.generated.h"
 
+class UBPC_Currencysystem;
 class UWidgetComponent;
 class UCameraComponent;
 
@@ -22,6 +24,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere) UPhysicsHandleComponent* PhysicsHandleComp; //physics component for items
 	UPROPERTY(EditDefaultsOnly, Category = "Player | Components") UUserWidget* PlayerWidget;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Player | Components") UBPC_Currencysystem* CurrencySystem;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
