@@ -90,7 +90,6 @@ void AWeaponDetection::InteractPure(AMyCharacter* player)
 		GEngine->AddOnScreenDebugMessage(-1,5.f, FColor::Red, debugmsgFail);
 	}
 }
-
 void AWeaponDetection::TriggerReforge()
 {
 	auto* Weapon = Cast<AWeapon>(CurrentWeapon);
