@@ -24,7 +24,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere) UPhysicsHandleComponent* PhysicsHandleComp; //physics component for items
 	UPROPERTY(EditDefaultsOnly, Category = "Player | Components") UUserWidget* PlayerWidget;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Player | Components") UBPC_Currencysystem* CurrencySystem;
+
+	UFUNCTION(BlueprintCallable, Category = "Player | Components")
+	FORCEINLINE UBPC_Currencysystem* GetCurrencySystem() const {return CurrencySystem;}
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -36,6 +38,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 private:
+	UPROPERTY() UBPC_Currencysystem* CurrencySystem;
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/// functions - Locomotion
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////

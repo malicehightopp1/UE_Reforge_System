@@ -72,16 +72,22 @@ void AWeaponDetection::OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AA
 #pragma region Reforge Interaction
 void AWeaponDetection::InteractPure(AMyCharacter* player)
 {
-	if (CurrentWeapon)
+	PlayerCurrentCurrency = player->GetCurrencySystem()->GetPlayerCurrentCurrency();//player has access to the currency system so cast to player to get currency system
+	if (CurrentWeapon && PlayerCurrentCurrency > 99)
 	{
 		UE_LOG(LogTemp, Error, TEXT("Reforging: %s"), *CurrentWeapon->GetName());
 		TriggerReforge();
+		player->GetCurrencySystem()->ChangePlayerCurrencey(-100); //might move this to the Trigger Reforge function so all reforge actions run at once
 	}
-	else
+	else if (!CurrentWeapon) 
 	{
 		FString debugmsgFail = FString::Printf(TEXT("Item is Not a reforge Item!!"));
-		
-		GEngine->AddOnScreenDebugMessage(-1,5.f, FColor::Cyan, debugmsgFail);
+		GEngine->AddOnScreenDebugMessage(-1,5.f, FColor::Red, debugmsgFail);
+	}
+	else if (PlayerCurrentCurrency <= 0)
+	{
+		FString debugmsgFail = FString::Printf(TEXT("Not Enough Money!!"));
+		GEngine->AddOnScreenDebugMessage(-1,5.f, FColor::Red, debugmsgFail);
 	}
 }
 
@@ -94,13 +100,10 @@ void AWeaponDetection::TriggerReforge()
 		UE_LOG(LogTemp, Error, TEXT("Not a reforgable Item"));
 		return;
 	}
-	Weapon->WeaponStats = Weapon->ReforgeData->GetRandomReforge();
-	
+	Weapon->WeaponStats = Weapon->ReforgeData->GetRandomReforge(); //reforging the item
 	if (GEngine)
 	{
-		
 		FString debugmsg = FString::Printf(TEXT("%s %s --- StatMultiply: %fx"), *Weapon->WeaponStats.Prefixes, *Weapon->WeaponName, Weapon->WeaponStats.StatMultiplier);
-		
 		GEngine->AddOnScreenDebugMessage(-1,5.f, FColor::Cyan, debugmsg);
 	}
 }

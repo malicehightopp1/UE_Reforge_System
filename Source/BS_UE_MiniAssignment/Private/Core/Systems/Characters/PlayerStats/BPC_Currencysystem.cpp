@@ -7,14 +7,20 @@ UBPC_Currencysystem::UBPC_Currencysystem()
 	PrimaryComponentTick.bCanEverTick = false;
 	
 	PlayerCurrentCurrency = 0;
-	PlayerMaxCurrency = 999;
+	PlayerMaxCurrency = 1000;
 }
 void UBPC_Currencysystem::BeginPlay()
 {
 	Super::BeginPlay();
-	PlayerCurrentCurrency = 0;
-	PlayerMaxCurrency = 100;
-	OnCurrencyChange.Broadcast(PlayerCurrentCurrency); //initial broadcast to set default value
+	PlayerCurrentCurrency = PlayerMaxCurrency; //for testing coins
+	if (OnCurrencyChange.IsBound())
+	{
+		OnCurrencyChange.Broadcast(PlayerCurrentCurrency); //initial broadcast to set default value
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Current Currency is not bound"));
+	}
 }
 // Called every frame
 void UBPC_Currencysystem::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)

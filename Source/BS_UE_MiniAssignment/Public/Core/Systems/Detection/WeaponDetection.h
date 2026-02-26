@@ -47,6 +47,7 @@ private:
 	//Reforging
 	UPROPERTY() AActor* CurrentWeapon;
 	UPROPERTY(EditDefaultsOnly, Category = "Detection | Reforging") bool bPlayerIsInRange = false;
+	UPROPERTY(EditDefaultsOnly, Category = "Detection | Reforging") float PlayerCurrentCurrency = 0;
 	
 	//Components
 	UPROPERTY(EditDefaultsOnly, Category = "Detection | Components ") UBoxComponent* BoxComp;
